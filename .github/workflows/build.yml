@@ -29,6 +29,10 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
+      # Sadece bu izni ekledim, 'Permission denied' hatasını bu satır çözecek
+      - name: Make gradlew executable
+        run: chmod +x gradlew
+
       - name: Clean Build
         run: ./gradlew clean
 
