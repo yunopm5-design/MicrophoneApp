@@ -33,10 +33,15 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x gradlew
 
-      # gradle.properties'deki MaxPermSize ayarını düzelttiğimiz için artık
-      # gradle wrapper komutu daemon sorunu olmadan çalışıyor
+      # gradle wrapper komutunu doğrudan projede çalıştırırsak build.gradle dosyanız
+      # okunmaya çalışılıyor ve içindeki eski syntax hataya sebep oluyor.
+      # Bu yüzden boş bir klasörde wrapper dosyalarını üretip projeye kopyalıyoruz.
       - name: Regenerate Gradle Wrapper Jar
-        run: gradle wrapper --gradle-version 8.0
+        run: |
+          mkdir -p /tmp/wrapper-gen
+          cd /tmp/wrapper-gen
+          gradle wrapper --gradle-version 8.0
+          cp gradle/wrapper/gradle-wrapper.jar "$GITHUB_WORKSPACE/gradle/wrapper/gradle-wrapper.jar"
 
       - name: Clean Build
         run: ./gradlew clean
