@@ -74,12 +74,10 @@ class MainActivity : AppCompatActivity() {
         if (isMicrophoneMode) {
             // Mikrofona yönlendir
             audioManager.setSpeakerphoneOn(false)
-            audioManager.routing = AudioManager.ROUTE_EARPIECE
             audioManager.setMicrophoneMute(false)
         } else {
             // Normal hoparlöre dön
             audioManager.setSpeakerphoneOn(true)
-            audioManager.routing = AudioManager.ROUTE_SPEAKER
             audioManager.setMicrophoneMute(false)
         }
         
