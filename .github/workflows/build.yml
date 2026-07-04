@@ -25,14 +25,9 @@ jobs:
           distribution: 'temurin'
           cache: gradle
 
-      # Doğru ve güvenli Gradle indirme adımı
-      - name: Download Gradle Wrapper JAR
-        run: |
-          mkdir -p gradle/wrapper
-          wget -O gradle/wrapper/gradle-wrapper.jar https://apache.org
-
-      - name: Make gradlew executable
-        run: chmod +x gradlew
+      # Bozuk tüm wrapper dosyalarını unutturan, resmi otomatik Gradle kurucu adımımız
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
 
       - name: Clean Build
         run: ./gradlew clean
