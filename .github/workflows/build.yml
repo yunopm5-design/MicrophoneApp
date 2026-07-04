@@ -21,15 +21,15 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
-          java-version: '17' # Güncel Android projeleri için Java 17 daha kararlıdır
+          java-version: '17'
           distribution: 'temurin'
           cache: gradle
 
-      # Eksik veya bozuk gradle-wrapper.jar dosyasını otomatik indiren sihirli adımımız
+      # Doğru ve güvenli Gradle indirme adımı
       - name: Download Gradle Wrapper JAR
         run: |
           mkdir -p gradle/wrapper
-          wget -O gradle/wrapper/gradle-wrapper.jar https://githubusercontent.com
+          wget -O gradle/wrapper/gradle-wrapper.jar https://apache.org
 
       - name: Make gradlew executable
         run: chmod +x gradlew
