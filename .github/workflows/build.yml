@@ -33,6 +33,10 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x gradlew
 
+      # gradle-wrapper.jar depoda eksik/bozuk olduğu için burada yeniden oluşturuyoruz
+      - name: Regenerate Gradle Wrapper Jar
+        run: gradle wrapper --gradle-version 8.0
+
       - name: Clean Build
         run: ./gradlew clean
 
