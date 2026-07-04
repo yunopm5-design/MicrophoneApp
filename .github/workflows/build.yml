@@ -35,7 +35,7 @@ jobs:
 
       # gradle-wrapper.jar depoda eksik/bozuk olduğu için burada yeniden oluşturuyoruz
       - name: Regenerate Gradle Wrapper Jar
-        run: gradle wrapper --gradle-version 8.0
+        run: gradle wrapper --gradle-version 8.0 --no-daemon
 
       - name: Clean Build
         run: ./gradlew clean
