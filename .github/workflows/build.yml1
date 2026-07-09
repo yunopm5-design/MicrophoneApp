@@ -25,24 +25,23 @@ jobs:
           distribution: 'temurin'
           cache: gradle
 
-      # Bozuk tüm wrapper dosyalarını unutturan, resmi otomatik Gradle kurucu adımımız
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      # Sadece bu izni ekledim, 'Permission denied' hatasını bu satır çözecek
-      - name: Make gradlew executable
-        run: chmod +x gradlew
-
-      # gradle wrapper komutunu doğrudan projede çalıştırırsak build.gradle dosyanız
-      # okunmaya çalışılıyor ve içindeki eski syntax hataya sebep oluyor.
-      # Bu yüzden boş bir klasörde wrapper dosyalarını üretip projeye kopyalıyoruz.
-      - name: Regenerate Gradle Wrapper Jar
+      # Repodaki gradlew/jar dosyalarına güvenmiyoruz, her seferinde
+      # boş bir klasörde sıfırdan üretip projeye kopyalıyoruz.
+      - name: Generate Gradle Wrapper
         run: |
           mkdir -p /tmp/wrapper-gen
           cd /tmp/wrapper-gen
           touch settings.gradle
           gradle wrapper --gradle-version 8.0
+          cp gradlew "$GITHUB_WORKSPACE/gradlew"
+          cp gradlew.bat "$GITHUB_WORKSPACE/gradlew.bat"
           cp gradle/wrapper/gradle-wrapper.jar "$GITHUB_WORKSPACE/gradle/wrapper/gradle-wrapper.jar"
+
+      - name: Make gradlew executable
+        run: chmod +x gradlew
 
       - name: Clean Build
         run: ./gradlew clean
@@ -66,3 +65,4 @@ jobs:
           name: app-release
           path: app/build/outputs/apk/release/
         continue-on-error: true
+        
